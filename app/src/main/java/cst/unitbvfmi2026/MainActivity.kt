@@ -12,6 +12,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import cst.unitbvfmi2026.ui.navigation.AuthenticationNavigation
 import cst.unitbvfmi2026.ui.screens.LogInScreen
 import cst.unitbvfmi2026.ui.theme.UnitBvFMI2026Theme
 
@@ -21,13 +22,7 @@ class MainActivity : ComponentActivity() {
 		enableEdgeToEdge()
 		setContent {
 			UnitBvFMI2026Theme {
-				Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-//					Greeting(
-//						name = "Android",
-//						modifier = Modifier.padding(innerPadding)
-//					)
-					LogInScreen(modifier = Modifier.padding(innerPadding))
-				}
+				AuthenticationNavigation()
 			}
 		}
 
@@ -74,5 +69,13 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 fun GreetingPreview() {
 	UnitBvFMI2026Theme {
 		Greeting("Android")
+	}
+}
+
+@Preview(showBackground = true)
+@Composable
+fun ActivityPreview() {
+	UnitBvFMI2026Theme {
+		AuthenticationNavigation()
 	}
 }
