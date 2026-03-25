@@ -37,13 +37,14 @@ import androidx.compose.ui.unit.dp
 import cst.unitbvfmi2026.util.isValidEmail
 
 @Composable
-fun LogInScreen(
+fun RegisterScreen(
     modifier: Modifier = Modifier,
-    onRegisterClick: ()->Unit = {}
-
+    onLoginClick: () -> Unit = {}
 ) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    var emailError by remember { mutableStateOf<String?>(null) }
+    var passwordError by remember { mutableStateOf<String?>(null) }
     var passwordVisibility by remember { mutableStateOf(false) }
     Column(
         modifier = Modifier
@@ -59,7 +60,7 @@ fun LogInScreen(
             style = MaterialTheme.typography.headlineLarge
         )
         Text(
-            text = "Log In Page",
+            text = "Register Page",
             color = MaterialTheme.colorScheme.secondary,
             style = MaterialTheme.typography.headlineSmall
         )
@@ -70,6 +71,7 @@ fun LogInScreen(
             value = email,
             onValueChange = { newValue ->
                 email = newValue//primeste val scrisa in field
+                emailError = null
             },
             label = {
                 Text("Email")
@@ -80,6 +82,10 @@ fun LogInScreen(
                     contentDescription = null
                 )//content description ajuta la teste unitare
             },
+            isError = emailError?.let {
+                true
+            } ?: false,
+            supportingText = emailError?.let { { Text(it) } },
             singleLine = true,
             modifier = Modifier.fillMaxWidth(),
             keyboardOptions = KeyboardOptions(
@@ -144,25 +150,31 @@ fun LogInScreen(
         )
         Button(
             {
+                var valid = true
+                if (!email.isValidEmail()) {
+                    emailError = "Invalid Email"
+                    valid = false
+                }
+
             },
-            modifier=Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Login")
+            Text("Register")
         }
         Spacer(
             modifier = Modifier.height(16.dp)
 
         )
         TextButton(
-            onRegisterClick
+            onLoginClick
         ) {
-            Text("Don't have an account? Register")
+            Text("Already have an account? LogIn")
         }
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun LogInScreenPreview() {
-    LogInScreen()
+fun RegisterScreenPreview() {
+    RegisterScreen()
 }
